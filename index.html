@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>يوسف أبو القاسم - تواصل</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+h1 {
+    color: gold;
+}
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 15px auto;
+    max-width: 300px;
+}
+a {
+    display: block;
+    margin: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+}
+.whatsapp {
+    background: #25D366;
+}
+.call {
+    background: gold;
+    color: black;
+}
+canvas {
+    margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>المعلم / يوسف أبو القاسم</h1>
+<p>تجارة الورق والكرتون</p>
+
+<div class="card">
+    <p>01033512476</p>
+    <a class="whatsapp" href="https://wa.me/201033512476">واتساب</a>
+    <a class="call" href="tel:+201033512476">اتصال</a>
+</div>
+
+<div class="card">
+    <p>01270876926</p>
+    <a class="whatsapp" href="https://wa.me/201270876926">واتساب</a>
+    <a class="call" href="tel:+201270876926">اتصال</a>
+</div>
+
+<h3>امسح الكود للتواصل</h3>
+<canvas id="qr"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+QRCode.toCanvas(document.getElementById('qr'), "https://wa.me/201270876926");
+</script>
+
+</body>
+</html>
