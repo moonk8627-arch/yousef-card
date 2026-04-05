@@ -3,70 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>يوسف أبو القاسم - تواصل</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    color: white;
-    text-align: center;
-    padding: 20px;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Cairo',sans-serif;
+    background:url('https://i.ibb.co/yn67fjz8/image.jpg') no-repeat center/cover;
+    background-attachment:fixed;
+    min-height:100vh;
+    color:#fff;
 }
-h1 {
-    color: gold;
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
 }
-.card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 15px;
-    margin: 15px auto;
-    max-width: 300px;
+
+.container{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    width:90%;
+    max-width:420px;
+    margin:auto;
+    padding:40px 0;
 }
-a {
-    display: block;
-    margin: 10px;
-    padding: 12px;
-    border-radius: 10px;
-    text-decoration: none;
-    color: white;
+
+/* 👑 اسم متوهج */
+h1{
+    font-size:30px;
+    margin-bottom:10px;
+    background:linear-gradient(90deg,#FFD700,#fff,#FFD700);
+    background-size:200%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shine 4s linear infinite;
 }
-.whatsapp {
-    background: #25D366;
+
+@keyframes shine{
+    0%{background-position:0%}
+    100%{background-position:200%}
 }
-.call {
-    background: gold;
-    color: black;
+
+p{
+    margin-bottom:15px;
+    font-size:17px;
 }
-canvas {
-    margin-top: 20px;
+
+/* 💎 كروت */
+.card{
+    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,215,0,0.4);
+    padding:20px;
+    border-radius:18px;
+    margin:15px 0;
+    box-shadow:0 0 15px rgba(255,215,0,0.2);
+}
+
+/* 🔥 أزرار */
+a,button{
+    display:block;
+    width:100%;
+    margin:8px 0;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    text-decoration:none;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.whatsapp{background:#25D366;color:#fff;}
+.call{background:gold;color:#000;}
+.map{
+    background:linear-gradient(45deg,gold,orange);
+    color:#000;
+    font-weight:bold;
+}
+
+/* ✨ Hover فخم */
+a:hover,button:hover{
+    transform:scale(1.06);
+    box-shadow:0 0 15px gold;
+}
+
+/* 📋 Copy */
+.copy{
+    background:#444;
+    color:#fff;
+}
+
+/* QR */
+canvas{
+    margin-top:20px;
+    width:180px !important;
+    height:180px !important;
+    background:#fff;
+    padding:10px;
+    border-radius:10px;
+}
+
+/* رسالة النسخ */
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:gold;
+    color:black;
+    padding:10px 20px;
+    border-radius:20px;
+    display:none;
 }
 </style>
-
 </head>
+
 <body>
 
-<h1>المعلم / يوسف أبو القاسم</h1>
+<div class="container">
+
+<h1>👑 المعلم / يوسف أبو القاسم</h1>
 <p>تجارة الورق والكرتون</p>
 
 <div class="card">
-    <p>01033512476</p>
+    <p id="num1">01033512476</p>
     <a class="whatsapp" href="https://wa.me/201033512476">واتساب</a>
     <a class="call" href="tel:+201033512476">اتصال</a>
+    <button class="copy" onclick="copyNum('num1')">📋 نسخ الرقم</button>
 </div>
 
 <div class="card">
-    <p>01270876926</p>
+    <p id="num2">01270876926</p>
     <a class="whatsapp" href="https://wa.me/201270876926">واتساب</a>
     <a class="call" href="tel:+201270876926">اتصال</a>
+    <button class="copy" onclick="copyNum('num2')">📋 نسخ الرقم</button>
 </div>
 
-<h3>امسح الكود للتواصل</h3>
+<a class="map" href="https://maps.app.goo.gl/M6PbaL6y44ZkkLYG9?g_st=aw" target="_blank">
+📍 الموقع على الخريطة
+</a>
+
+<h3>امسح الكود للدخول للموقع</h3>
 <canvas id="qr"></canvas>
+
+</div>
+
+<div class="toast" id="toast">تم نسخ الرقم ✅</div>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 <script>
-QRCode.toCanvas(document.getElementById('qr'), "https://wa.me/201270876926");
+
+/* QR يفتح الموقع نفسه */
+QRCode.toCanvas(document.getElementById('qr'), window.location.href, {
+    width:180
+});
+
+/* Copy */
+function copyNum(id){
+    let text=document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+
+    let toast=document.getElementById("toast");
+    toast.style.display="block";
+
+    setTimeout(()=>{toast.style.display="none";},2000);
+}
+
 </script>
 
 </body>
